@@ -1,9 +1,9 @@
+package com.transportation;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
-package com.transportation;
 
 public class ReadFiles {
     public ArrayList<ArrayList<Object>> readAristasFromFile(String filePath) {
@@ -19,10 +19,12 @@ public class ReadFiles {
                     for (int i = 2; i < 6; i++) {
                         pesos.add(Double.parseDouble(parts[i]));
                     }
+                    /*
                     Arista arista = new Arista(new Nodo(ciudad1), new Nodo(ciudad2), pesos);
                     
                     ArrayList<Object> aristaData = new ArrayList<>();
                     aristaData.add(arista);
+                    */
                 }
             }
         } catch (IOException | NumberFormatException e) {
