@@ -9,6 +9,7 @@
   <!--<artifactId>hdt10</artifactId>-->
   <version>1</version>
 
+
   <name>HDT10-DS</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
@@ -52,6 +53,13 @@
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
+          <configuration>
+              <archive>
+                <manifest>
+                  <mainClass>com.transportation.Main</mainClass>
+                </manifest>
+              </archive>
+            </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>

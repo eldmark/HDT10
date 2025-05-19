@@ -2,34 +2,35 @@ package com.transportation;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class ReadFiles {
-    public ArrayList<ArrayList<Object>> readAristasFromFile(String filePath) {
-        ArrayList<ArrayList<Object>> aristas = new ArrayList<>();
+    /*
+     * @author angcoder-c Angel Chavez 24248
+     */
+    public static Graph readAristasFromFile(String filePath, int tiempoIndex) {
+        Graph grafo = new Graph();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            int nline = 0;
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.trim().split("\\s+");
-                if (parts.length == 6) {
-                    String ciudad1 = parts[0];
-                    String ciudad2 = parts[1];
-                    ArrayList<Double> pesos = new ArrayList<>();
-                    for (int i = 2; i < 6; i++) {
-                        pesos.add(Double.parseDouble(parts[i]));
-                    }
-                    /*
-                    Arista arista = new Arista(new Nodo(ciudad1), new Nodo(ciudad2), pesos);
+
+                if (parts.length == 6 && nline !=0) {
+                    Nodo ciudad1 = new Nodo(parts[0]);
+                    Nodo ciudad2 = new Nodo(parts[1]);
+                    double peso = Double.parseDouble(parts[tiempoIndex+1]);
                     
-                    ArrayList<Object> aristaData = new ArrayList<>();
-                    aristaData.add(arista);
-                    */
+                    Arista arista = new Arista(ciudad1, ciudad2, peso);
+                    
+                    grafo.addNode(ciudad1);
+                    grafo.addNode(ciudad2);
+                    grafo.addArista(arista);
                 }
+                nline++;
             }
-        } catch (IOException | NumberFormatException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            return grafo;
         }
-        return aristas;
+        return grafo;
     }
 }
