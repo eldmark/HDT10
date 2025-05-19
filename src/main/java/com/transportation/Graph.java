@@ -1,26 +1,34 @@
 package com.transportation;
 
+import java.lang.reflect.Array;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import javax.swing.event.ListSelectionEvent;
+
 /**
  * @author Marco Alejandro Díaz Castañeda 24229
  * @author angcoder-c Angel Chavez 24248
  */
 public class Graph {
-    private HashSet<Nodo> nodes;
-    private ArrayList<Arista> aristas;
+    private Set<Nodo> nodes;
+    private Set<Arista> aristas;
 
 
     public Graph() {
         this.nodes = new HashSet<Nodo>();
-        this.aristas = new ArrayList<Arista>();
+        this.aristas = new HashSet<Arista>();
     }
     
-    public HashSet<Nodo> getNodes() {
+    public Set<Nodo> getNodes() {
         return this.nodes;
     }
 
-    public ArrayList<Arista> getAristas() {
+    public Set<Arista> getAristas() {
         return this.aristas;
     }
 
@@ -46,4 +54,15 @@ public class Graph {
         return new Nodo("");
     }
 
+    public ArrayList<ArrayList<Double>> genInitMatrix () {
+        int nNodes = this.nodes.size();
+        ArrayList<ArrayList<Double>> result = new ArrayList<ArrayList<Double>>();
+
+        for (Nodo node : this.nodes) {
+            System.out.println(node.getName());
+            ArrayList<Double> row = new ArrayList<Double>;
+            
+        }
+        return result;
+    }
 }

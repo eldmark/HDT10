@@ -7,6 +7,6 @@ package com.transportation;
 public class Main {
     public static void main(String[] args) {
         Graph grafo = GraphFactory.createGraph(1);
-        System.out.print(grafo.getAristas());
+        System.out.print(grafo.genInitMatrix());
     }
 }
