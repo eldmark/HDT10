@@ -1,12 +1,94 @@
 package com.transportation;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import javax.sound.midi.SysexMessage;
+
 /*
  * @author angcoder-c Angel Chavez 24248
  */
 
 public class Main {
+
+    public static Nodo[] rutaMenu (Scanner sc) {
+        System.out.print("Desde: ");
+        String from = sc.nextLine();
+
+        System.out.print("Hasta: ");
+        String to = sc.nextLine();
+
+        Nodo[] inputs = {new Nodo(from), new Nodo(to)};
+        return inputs;
+    }
+
+    public static int tiempoMenu (Scanner sc) {
+        System.out.print(
+            "Tiempo: \n" +
+            "(1) Normal\n" +
+            "(2) Lluvioso\n" +
+            "(3) Nevado\n" +
+            "(4) Tormental\n" +
+            ">>> "
+        );
+        String tiempo = sc.nextLine();
+        int tiempoIndex = 1;
+
+        if (tiempo.equals("1")) { 
+            tiempoIndex = 1; 
+        } else if (tiempo.equals("2")) { 
+            tiempoIndex = 2; 
+        } else if (tiempo.equals("3")) { 
+            tiempoIndex = 3; 
+        } else if (tiempo.equals("4")) { 
+            tiempoIndex = 4; 
+        }
+        return tiempoIndex;
+    }
+
+    public static void rutaMasCorta (Nodo[] nodos, Graph grafo) {
+        Nodo from = nodos[0];
+        Nodo to = nodos[1];
+        List<Nodo> ruta = grafo.rutaMasCorta(from, to);
+        
+        System.out.println(grafo.floydRutas());
+        if (ruta.isEmpty()) {
+            System.out.println("No hay una ruta entre " + from.getName() + " y " + to.getName());
+        } else {
+            System.out.print("Ruta más corta de " + from.getName() + " a " + to.getName() + ": ");
+            for (Nodo n : ruta) {
+                System.out.print(n.getName() + " ");
+            }
+            System.out.println();
+
+            List<Nodo> nodeList = new ArrayList<>(grafo.getNodes());
+            int i = nodeList.indexOf(from);
+            int j = nodeList.indexOf(to);
+            double tiempo = grafo.floydRutas().dist[i][j];
+
+            System.out.println("Tiempo total de viaje: " + tiempo);
+        }
+    }
+
     public static void main(String[] args) {
-        Graph grafo = GraphFactory.createGraph(1);
-        System.out.print(grafo.genInitMatrix());
+        String option = "";
+        Scanner sc = new Scanner(System.in);
+
+        int tiempoIndex = Main.tiempoMenu(sc);
+        Graph grafo = GraphFactory.createGraph(tiempoIndex);
+        
+        while (!option.equals("0")) {
+            System.out.print(
+            "(1) Calcular ruta más corta\n" + 
+            "(0) Salir\n" +
+            ">>> ");
+            option = sc.nextLine();
+
+            if (option.equals("1")) {
+                Nodo[] nodos = Main.rutaMenu(sc);
+                Main.rutaMasCorta(nodos, grafo);
+            }
+        }
     }
 }
