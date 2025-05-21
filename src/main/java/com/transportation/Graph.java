@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Arrays;
 
 /**
  * @author Marco Alejandro Díaz Castañeda 24229
@@ -13,7 +14,6 @@ import java.util.Set;
 public class Graph {
     private Set<Nodo> nodes;
     private Set<Arista> aristas;
-
 
     public Graph() {
         this.nodes = new HashSet<Nodo>();
@@ -36,9 +36,6 @@ public class Graph {
         this.aristas.add(arista);
     }
 
-    /*
-    * @author angcoder-c Angel Chavez 24248
-    */
     public FloydResult floydRutas() {
         int n = this.nodes.size();
         ArrayList<Nodo> nodeList = new ArrayList<>(nodes);
@@ -80,9 +77,6 @@ public class Graph {
         return new FloydResult(dist, pred);
     }
 
-    /*
-    * @author angcoder-c Angel Chavez 24248
-    */    
     public List<Nodo> rutaMasCorta(Nodo from, Nodo to) {
         ArrayList<Nodo> nodeList = new ArrayList<>(nodes);
         FloydResult result = this.floydRutas();
@@ -95,7 +89,6 @@ public class Graph {
         int i = nodeList.indexOf(from);
         int j = nodeList.indexOf(to);
 
-        // si no existe, no hay ruta
         if (result.pred[i][j] == null) {
             return Collections.emptyList();
         }
@@ -116,10 +109,40 @@ public class Graph {
         return ruta;
     }
 
-    /*
-    * @author angcoder-c Angel Chavez 24248
-    */
     public Nodo centroGrafo() {
-        return new Nodo("");
+        FloydResult result = this.floydRutas();
+        double[][] dist = result.dist;
+        ArrayList<Nodo> nodeList = new ArrayList<>(nodes);
+
+        if (nodeList.isEmpty()) {
+            return null;
+        }
+
+        double[] excentricidades = new double[nodeList.size()];
+        Arrays.fill(excentricidades, Double.NEGATIVE_INFINITY);
+
+        for (int j = 0; j < nodeList.size(); j++) {
+            for (int i = 0; i < nodeList.size(); i++) {
+                if (dist[i][j] != Double.POSITIVE_INFINITY && dist[i][j] > excentricidades[j]) {
+                    excentricidades[j] = dist[i][j];
+                }
+            }
+            // If any node is unreachable, the graph is disconnected
+            if (excentricidades[j] == Double.NEGATIVE_INFINITY) {
+                return null;
+            }
+        }
+
+        int centroIndex = 0;
+        double minExcentricidad = excentricidades[0];
+
+        for (int i = 1; i < excentricidades.length; i++) {
+            if (excentricidades[i] < minExcentricidad) {
+                minExcentricidad = excentricidades[i];
+                centroIndex = i;
+            }
+        }
+
+        return nodeList.get(centroIndex);
     }
 }
