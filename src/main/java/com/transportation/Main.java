@@ -65,7 +65,6 @@ public class Main {
             double tiempo = grafo.floydRutas().dist[i][j];
 
             System.out.println("Tiempo total de viaje: " + tiempo + " minutos");
-            System.out.println("Centro del grafo: " + grafo.centroGrafo());
             System.out.println("Centro del grafo: " + grafo.centroGrafo().getName());
         }
     }
@@ -81,15 +80,18 @@ public class Main {
         while (!option.equals("0")) {
             System.out.print(
                     "(1) Calcular ruta más corta\n" +
-                            "(2) Agregar nuevo nodo\n" +
-                            "(0) Salir\n" +
+                    "(2) Agregar nuevo nodo\n" +
+                    "(3) Calcular el centro del grafo\n" +
+                    "(0) Salir\n" +
                             ">>> ");
             option = sc.nextLine();
 
             if (option.equals("1")) {
                 Nodo[] nodos = Main.rutaMenu(sc);
                 Main.rutaMasCorta(nodos, grafo);
-            } else if (option.equals("2")) {
+            } 
+            
+            if (option.equals("2")) {
                 System.out.print("Nombre del nuevo nodo: ");
                 String nodeName = sc.nextLine();
                 Nodo nuevoNodo = new Nodo(nodeName);
@@ -112,6 +114,10 @@ public class Main {
                 }
                 
                 System.out.println("Nodo '" + nodeName + "' agregado al grafo.");
+            }
+
+            if (option.equals("3")) {
+                System.out.println("Centro del grafo: " + grafo.centroGrafo().getName());
             }
         }
     }

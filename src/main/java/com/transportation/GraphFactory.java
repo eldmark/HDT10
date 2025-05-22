@@ -4,6 +4,6 @@ package com.transportation;
  */
 public class GraphFactory {
     public static Graph createGraph(int pesoIndex) {
-        return ReadFiles.readAristasFromFile("./src/main/java/com/transportation/test.txt", pesoIndex);
+        return ReadFiles.readAristasFromFile("./src/main/java/com/transportation/guategrafo.txt", pesoIndex);
     }    
 }
